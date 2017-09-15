@@ -1,4 +1,4 @@
-package cn.ymex.label;
+package cn.ymex.little;
 
 import org.junit.Test;
 
