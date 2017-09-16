@@ -25,22 +25,22 @@ import android.view.View;
 import cn.ymex.little.R;
 
 
-public class TextLabelView extends AppCompatTextView {
+public class TextLabel extends AppCompatTextView {
 
     private Label startLabel;
     private Label endLabel;
     private Label textLabel;
 
-    public TextLabelView(Context context) {
+    public TextLabel(Context context) {
         this(context, null);
     }
 
-    public TextLabelView(Context context, AttributeSet attrs) {
+    public TextLabel(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public TextLabelView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TextLabel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -72,21 +72,21 @@ public class TextLabelView extends AppCompatTextView {
     }
 
     private void dealAttr(AttributeSet attrs) {
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TextLabelView, 0, 0);
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TextLabel, 0, 0);
 
         int textColor = getTextColors().getDefaultColor();
         String text = getText().toString();
         float textSize = getTextSize();
         textLabel = new Label(textColor, textSize, text);
 
-        String startText = typedArray.getString(R.styleable.TextLabelView_start_text);
-        int startTextColor = typedArray.getColor(R.styleable.TextLabelView_start_text_color, textColor);
-        int startTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabelView_start_text_size, (int) textSize);
+        String startText = typedArray.getString(R.styleable.TextLabel_start_text);
+        int startTextColor = typedArray.getColor(R.styleable.TextLabel_start_text_color, textColor);
+        int startTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_start_text_size, (int) textSize);
         startLabel = new Label(startTextColor, startTextSize, startText);
 
-        String endText = typedArray.getString(R.styleable.TextLabelView_end_text);
-        int endTextColor = typedArray.getColor(R.styleable.TextLabelView_end_text_color, textColor);
-        int endTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabelView_end_text_size, (int) textSize);
+        String endText = typedArray.getString(R.styleable.TextLabel_end_text);
+        int endTextColor = typedArray.getColor(R.styleable.TextLabel_end_text_color, textColor);
+        int endTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_end_text_size, (int) textSize);
         endLabel = new Label(endTextColor, endTextSize, endText);
 
         typedArray.recycle();

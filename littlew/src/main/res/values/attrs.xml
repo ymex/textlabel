@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="TextLabelView">
+    <declare-styleable name="TextLabel">
         <attr name="start_text" format="string|reference" />
         <attr name="start_text_color" format="color|reference" />
         <attr name="start_text_size" format="dimension" />

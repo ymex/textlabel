@@ -8,7 +8,7 @@
     tools:context="com.sample.labelview.MainActivity">
 
 
-    <cn.ymex.little.view.TextLabelView
+    <cn.ymex.little.view.TextLabel
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
