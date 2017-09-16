@@ -7,6 +7,8 @@ import android.view.View;
 
 import cn.ymex.little.view.TextLabel;
 import cn.ymex.little.widget.Toaster;
+import cn.ymex.popup.dialog.PopupDialog;
+import cn.ymex.popup.dialog.controller.AlertController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toaster.show("Hi mm");
+                PopupDialog.create(MainActivity.this)
+                        .controller(AlertController
+                                .build()
+                                .title("提示")
+                                .message("message")
+                                .positiveButton("Ok",null))
+                        .show();
             }
         }));
     }
