@@ -1,2 +1,9 @@
 # little-widget
-custom textview for android
+little widget for android
+
+## Toaster
+单例的Toast。
+
+## TextLabel
+
+

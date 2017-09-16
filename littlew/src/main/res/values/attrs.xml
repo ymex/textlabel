@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TextLabel">
-        <attr name="start_text" format="string|reference" />
-        <attr name="start_text_color" format="color|reference" />
-        <attr name="start_text_size" format="dimension" />
-        <attr name="end_text" format="string|reference" />
-        <attr name="end_text_size" format="dimension" />
-        <attr name="end_text_color" format="color|reference" />
+        <attr name="format" format="string"/>
+        <attr name="startText" format="string|reference" />
+        <attr name="startTextColor" format="color|reference" />
+        <attr name="startTextSize" format="dimension" />
+        <attr name="endText" format="string|reference" />
+        <attr name="endTextSize" format="dimension" />
+        <attr name="endTextColor" format="color|reference" />
     </declare-styleable>
 </resources>

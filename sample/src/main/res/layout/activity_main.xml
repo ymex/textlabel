@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
     tools:context="com.sample.labelview.MainActivity">
 
 
@@ -12,7 +12,20 @@
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="18sp"
-        android:textColor="#000000" />
+        android:layout_marginTop="16dip"
+        android:padding="8dip"
+        android:text="十三"
+        app:startText="姓名:"
+        app:endText="-路易"
+        app:format="我的姓名是%1$s"
+        app:endTextColor="@color/colorAccent"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_settext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:text="setText()" />
 </LinearLayout>

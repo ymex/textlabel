@@ -2,8 +2,6 @@ package com.sample.labelview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
@@ -23,33 +21,19 @@ public class MainActivity extends AppCompatActivity {
 
         textLabel = (TextLabel) findViewById(R.id.tv_label);
         textLabel.setMovementMethod(LinkMovementMethod.getInstance());
-        SpannableString spannableString = insertImage();
 
-        SpannableStringBuilder builder = new SpannableStringBuilder(spannableString);
-        builder.append(insertImage());
-        //textLabel.setFormatText("my name %1$s","ymex");
-        textLabel.setOnTextLabelClickListener(TextLabel.LabelClickable.create(new View.OnClickListener() {
+        findViewById(R.id.btn_settext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toaster.show("----------hi");
+                textLabel.setTextFormat("ymex");
             }
-        }));
-        //textLabel.setText(insertImage());
-    }
+        });
 
-
-    private SpannableString insertImage() {
-
-        String text = "部分文字响应点击事件";
-        TextLabel.Label label = new TextLabel.Label(this, text, R.mipmap.ic_launcher);
-
-       // TextLabelView.Label label = new TextLabelView.Label(text);
-        label.setClickableSpan(TextLabel.LabelClickable.create(new View.OnClickListener() {
+        textLabel.setOnTextLabelClickListener(TextLabel.SpanClickListener.onClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toaster.show("----------hello");
+                Toaster.show("Hi mm");
             }
         }));
-        return label.getSpannable();
     }
 }
