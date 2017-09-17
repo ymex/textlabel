@@ -17,17 +17,31 @@ import android.text.style.ImageSpan;
 
 public class ImageSpannable extends ImageSpan {
 
-    private int ALIGN_FONTCENTER = 2;
+    public static final int ALIGN_FONTCENTER = 2;
 
     int imgWidth, imgHeight;
+
 
     public ImageSpannable(Context context, int resourceId) {
         super(context, resourceId);
     }
 
+    public ImageSpannable(Drawable drawable) {
+        super(drawable);
+    }
+
+    public ImageSpannable(Drawable drawable,int verticalAlignment) {
+        super(drawable,verticalAlignment);
+    }
+
     public ImageSpannable(Context context, int resourceId, int verticalAlignment) {
         super(context, resourceId, verticalAlignment);
     }
+
+    public ImageSpannable(Context context, Bitmap b, int verticalAlignment){
+        super(context, b, verticalAlignment);
+    }
+
 
     /**
      * @param width

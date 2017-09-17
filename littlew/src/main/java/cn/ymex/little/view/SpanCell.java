@@ -12,12 +12,14 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.View;
 
 
 public class SpanCell {
     CharSequence text;
     float textSize;
     int textColor;
+    int linkColor;
 
     boolean isImageSpanInLast = false;
     ImageSpan imageSpan;
@@ -50,9 +52,36 @@ public class SpanCell {
         isImageSpanInLast = imageSpanInLast;
     }
 
+    public void setLinkColor(int linkColor) {
+        this.linkColor = linkColor;
+    }
 
     public void setClickableImage(ClickableSpan clickable) {
         this.clickableImage = clickable;
+    }
+
+    public CharSequence getText() {
+        return text;
+    }
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public int getLinkColor() {
+        return linkColor;
+    }
+
+    public boolean isImageSpanInLast() {
+        return isImageSpanInLast;
+    }
+
+    public ImageSpan getImageSpan() {
+        return imageSpan;
     }
 
     public void setClickableSpan(ClickableSpan clickable) {
@@ -97,22 +126,27 @@ public class SpanCell {
         return this;
     }
 
+    public SpanCell linkColor(int linkColor) {
+        this.linkColor = linkColor;
+        return this;
+    }
 
     public SpanCell(CharSequence text) {
         this(text, null);
     }
 
     public SpanCell(ImageSpan imageSpan) {
-        this(Color.BLACK, dp2px(14), null, imageSpan);
+        this(Color.BLACK, dp2px(14), null, Color.BLACK, imageSpan);
     }
 
     public SpanCell(CharSequence text, ImageSpan imageSpan) {
-        this(Color.BLACK, dp2px(14), text, imageSpan);
+        this(Color.BLACK, dp2px(14), text, Color.BLACK, imageSpan);
     }
 
-    public SpanCell(int textColor, float textSize, CharSequence text, ImageSpan imageSpan) {
+    public SpanCell(int textColor, float textSize, CharSequence text, int linkColor, ImageSpan imageSpan) {
         this.textColor = textColor;
         this.textSize = textSize;
+        this.linkColor = linkColor;
         this.text = TextUtils.isEmpty(text) ? "" : text;
         this.imageSpan = imageSpan;
     }
@@ -144,7 +178,7 @@ public class SpanCell {
             int s = 0, e = imageSpanString.length();
             imageSpanString.setSpan(imageSpan, s, e, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             if (clickableImage != null) {
-                imageSpanString.setSpan(clickableImage,s,e,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                imageSpanString.setSpan(clickableImage, s, e, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         SpannableStringBuilder builder = new SpannableStringBuilder();
@@ -153,15 +187,19 @@ public class SpanCell {
             if (imageSpanString != null) {
                 builder.append(imageSpanString);
             }
-        }else {
+        } else {
             if (imageSpanString != null) {
                 builder.append(imageSpanString);
             }
             builder.append(textSpanString);
         }
         if (clickableSpan != null) {
-            builder.setSpan(clickableSpan,0,builder.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(clickableSpan, 0, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return builder.subSequence(0, builder.length());
+    }
+
+    public interface OnClickListener{
+        void onClick(View view, SpanCell spanCell);
     }
 }

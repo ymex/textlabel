@@ -14,10 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
         android:padding="8dip"
-        android:text="十三"
         app:startText="姓名:"
-        app:endText="-路易"
+        app:endText="路易"
+        app:startDrawableInLast="true"
         app:format="我的姓名是%1$s"
+        app:startDrawable="@mipmap/ic_launcher"
+        app:startDrawableVerticalAlignment="ALIGN_BOTTOM"
+        app:startDrawableSize="24dip"
         android:textColor="#000000"
         android:textSize="16sp" />
 

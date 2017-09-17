@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.StringRes;
+import android.support.annotation.StyleableRes;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -46,26 +47,65 @@ public class TextLabel extends AppCompatTextView {
         float textSize = getTextSize();
         textSpanCell = SpanCell.build().text(text).textColor(textColor).textSize(textSize);
 
-        String startText = typedArray.getString(R.styleable.TextLabel_startText);
-        int startTextColor = typedArray.getColor(R.styleable.TextLabel_startTextColor, textColor);
-        int startTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_startTextSize, (int) textSize);
-        startSpanCell = SpanCell.build().text(startText).textColor(startTextColor).textSize(startTextSize);
+        startSpanCell = resolveAttr(typedArray, R.styleable.TextLabel_startText,
+                R.styleable.TextLabel_startTextColor,
+                R.styleable.TextLabel_startTextSize,
+                R.styleable.TextLabel_startLinkColor,
+                R.styleable.TextLabel_startDrawable,
+                R.styleable.TextLabel_startDrawableSize,
+                R.styleable.TextLabel_startDrawableInLast,
+                R.styleable.TextLabel_startDrawableVerticalAlignment,
+                textColor, (int) textSize);
 
-        String endText = typedArray.getString(R.styleable.TextLabel_endText);
-        int endTextColor = typedArray.getColor(R.styleable.TextLabel_endTextColor, textColor);
-        int endTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_endTextSize, (int) textSize);
-        endSpanCell = SpanCell.build().text(endText).textColor(endTextColor).textSize(endTextSize);
-
+        endSpanCell = resolveAttr(typedArray, R.styleable.TextLabel_endText,
+                R.styleable.TextLabel_endTextColor,
+                R.styleable.TextLabel_endTextSize,
+                R.styleable.TextLabel_startLinkColor,
+                R.styleable.TextLabel_endDrawable,
+                R.styleable.TextLabel_endDrawableSize,
+                R.styleable.TextLabel_endDrawableInLast,
+                R.styleable.TextLabel_endDrawableVerticalAlignment,
+                textColor, (int) textSize);
         format = typedArray.getString(R.styleable.TextLabel_format);
-
         typedArray.recycle();
     }
+
+
+    private SpanCell resolveAttr(TypedArray typedArray, @StyleableRes int text, @StyleableRes int textColor,
+                                 @StyleableRes int textSize, @StyleableRes int linkColor,
+                                 @StyleableRes int drawable, @StyleableRes int drawableSize,
+                                 @StyleableRes int drawableInlast,
+                                 @StyleableRes int verticalAlignment,
+                                 int defTextColor, int defTextSize) {
+
+        String t = typedArray.getString(text);
+        int tColor = typedArray.getColor(textColor, defTextColor);
+        int tSize = typedArray.getDimensionPixelSize(textSize, defTextSize);
+        int tlinkColor = typedArray.getColor(linkColor, defTextColor);
+        int tDrawable = typedArray.getResourceId(drawable, -1);
+        int tDsize = typedArray.getDimensionPixelSize(drawableSize, -1);
+        boolean isLast = typedArray.getBoolean(drawableInlast, false);
+        int v = typedArray.getInt(verticalAlignment, ImageSpannable.ALIGN_FONTCENTER);
+        ImageSpannable imageSpan = null;
+        if (tDrawable > 0) {
+            imageSpan = new ImageSpannable(getContext(), tDrawable, v);
+            if (tDsize > 0) {
+                imageSpan.setSize(tDsize, tDsize);
+            }
+        }
+        return SpanCell.build().text(t)
+                .textColor(tColor)
+                .textSize(tSize)
+                .linkColor(tlinkColor)
+                .imageSpan(imageSpan)
+                .imageSpanInLast(isLast);
+    }
+
 
     private void init(AttributeSet attrs) {
         if (attrs != null) {
             dealAttr(attrs);
         }
-
         //this.setLinkTextColor(getTextColors());
         this.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
         this.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
@@ -160,9 +200,9 @@ public class TextLabel extends AppCompatTextView {
         this.textSpanCell = textSpanCell;
     }
 
-    public void setStartSpanCellClickListener(OnClickListener onClickListener) {
+    public void setStartSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.startSpanCell != null) {
-            startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener));
+            startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, startSpanCell));
         }
     }
 
@@ -171,28 +211,40 @@ public class TextLabel extends AppCompatTextView {
      */
     public static class SpanClickListener extends ClickableSpan {
 
-        OnClickListener onClickListener;
+        SpanCell.OnClickListener onClickListener;
+        SpanCell spanCell;
 
-        private SpanClickListener(OnClickListener clickListener) {
+        private SpanClickListener(SpanCell.OnClickListener clickListener, SpanCell spanCell) {
+            this.spanCell = spanCell;
             this.onClickListener = clickListener;
         }
 
-        public static SpanClickListener onClick(OnClickListener listener) {
-            return new SpanClickListener(listener);
+        public static SpanClickListener onClick(SpanCell.OnClickListener listener, SpanCell spanCell) {
+            return new SpanClickListener(listener, spanCell);
+        }
+
+        public static SpanClickListener onClick(SpanCell.OnClickListener listener) {
+            return new SpanClickListener(listener, null);
         }
 
         @Override
         public void onClick(View view) {
             if (this.onClickListener != null) {
-                this.onClickListener.onClick(view);
+                this.onClickListener.onClick(view, spanCell);
             }
         }
 
         @Override
         public void updateDrawState(TextPaint ds) {
             super.updateDrawState(ds);
-            //超链接形式的下划线，false 表示不显示下划线，true表示显示下划线
-            ds.setUnderlineText(false);
+            if (spanCell != null) {
+                ds.setColor(spanCell.getLinkColor());
+            } else {
+                ds.setColor(Color.BLUE);
+            }
+            ds.setUnderlineText(false);//下划线
+            ds.clearShadowLayer();
         }
     }
+
 }

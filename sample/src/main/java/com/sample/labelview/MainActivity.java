@@ -35,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        textLabel.setStartSpanCellClickListener(new View.OnClickListener() {
+        textLabel.setStartSpanCellClickListener(new SpanCell.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view,SpanCell cell) {
                 Toaster.show("Hi mm");
                 PopupDialog.create(MainActivity.this)
                         .controller(AlertController
                                 .build()
                                 .title("提示")
-                                .message("message")
+                                .message(cell.getText().toString())
                                 .positiveButton("Ok", null))
                         .show();
             }
@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                
                 ImageSpannable imageSpannable = new ImageSpannable(MainActivity.this, R.mipmap.ic_launcher);
                 imageSpannable.setSize(480, 360);
                 SpanCell spanCell = new SpanCell("bbap", imageSpannable);
