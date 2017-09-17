@@ -75,8 +75,7 @@ public class TextLabel extends AppCompatTextView {
     private SpanCell resolveAttr(TypedArray typedArray, @StyleableRes int text, @StyleableRes int textColor,
                                  @StyleableRes int textSize, @StyleableRes int linkColor,
                                  @StyleableRes int drawable, @StyleableRes int drawableSize,
-                                 @StyleableRes int drawableInlast,
-                                 @StyleableRes int verticalAlignment,
+                                 @StyleableRes int drawableInlast, @StyleableRes int verticalAlignment,
                                  int defTextColor, int defTextSize) {
 
         String t = typedArray.getString(text);
@@ -94,12 +93,8 @@ public class TextLabel extends AppCompatTextView {
                 imageSpan.setSize(tDsize, tDsize);
             }
         }
-        return SpanCell.build().text(t)
-                .textColor(tColor)
-                .textSize(tSize)
-                .linkColor(tlinkColor)
-                .imageSpan(imageSpan)
-                .imageSpanInLast(isLast);
+        return SpanCell.build().text(t).textColor(tColor).textSize(tSize).linkColor(tlinkColor)
+                .imageSpan(imageSpan).imageSpanInLast(isLast);
     }
 
 
@@ -173,7 +168,6 @@ public class TextLabel extends AppCompatTextView {
             this.setText(format);
             return;
         }
-
         this.setText(String.format(format.toString(), args));
     }
 
@@ -214,11 +208,13 @@ public class TextLabel extends AppCompatTextView {
             startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, startSpanCell));
         }
     }
+
     public void setTextSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.textSpanCell != null) {
             textSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, textSpanCell));
         }
     }
+
     public void setEndSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.endSpanCell != null) {
             endSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, endSpanCell));
@@ -258,8 +254,6 @@ public class TextLabel extends AppCompatTextView {
             super.updateDrawState(ds);
             if (spanCell != null) {
                 ds.setColor(spanCell.getLinkColor());
-            } else {
-                ds.setColor(Color.BLUE);
             }
             ds.setUnderlineText(false);//下划线
             ds.clearShadowLayer();
