@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
-import cn.ymex.little.view.ImageSpannable;
-import cn.ymex.little.view.SpanCell;
-import cn.ymex.little.view.TextLabel;
-import cn.ymex.little.widget.Toaster;
+import cn.ymex.textlabel.view.ImageSpannable;
+import cn.ymex.textlabel.view.SpanCell;
+import cn.ymex.textlabel.view.TextLabel;
+import cn.ymex.textlabel.widget.Toaster;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.dialog.controller.AlertController;
 

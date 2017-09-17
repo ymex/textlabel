@@ -1,4 +1,4 @@
-package cn.ymex.little.view;
+package cn.ymex.textlabel.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,7 @@ import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.ymex.little.R;
+import cn.ymex.textlabel.R;
 
 
 public class TextLabel extends AppCompatTextView {

@@ -1,4 +1,4 @@
-package cn.ymex.little.widget;
+package cn.ymex.textlabel.widget;
 
 
 import android.app.Activity;
