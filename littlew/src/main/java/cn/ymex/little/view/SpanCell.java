@@ -1,14 +1,17 @@
 package cn.ymex.little.view;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
-
+import android.util.TypedValue;
 
 
 public class SpanCell {
@@ -17,33 +20,30 @@ public class SpanCell {
     int textColor;
 
     boolean isImageSpanInLast = false;
-
-    int imgWidth,imgHeight;
-
     ImageSpan imageSpan;
+
     ClickableSpan clickableSpan, clickableImage;
 
-    public SpanCell(CharSequence text, ImageSpan imageSpan) {
-        this.text = TextUtils.isEmpty(text) ? "" : text;
+
+    public static SpanCell build() {
+        return new SpanCell("");
+    }
+
+    public void setText(CharSequence text) {
+        this.text = text;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
+
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
+
+    public void setImageSpan(ImageSpan imageSpan) {
         this.imageSpan = imageSpan;
-    }
-
-    public SpanCell(ImageSpan imageSpan) {
-        this(null, imageSpan);
-    }
-
-    public SpanCell(int color, float size, CharSequence text) {
-        this(text, null);
-        this.textColor = color;
-        this.textSize = size;
-    }
-
-    public SpanCell(CharSequence text) {
-        this(text, null);
-    }
-
-    public SpanCell(Context context, CharSequence text, int resourceId) {
-        this(text, new ImageSpannable(context, resourceId));
     }
 
     public void setImageSpanInLast(boolean imageSpanInLast) {
@@ -60,51 +60,108 @@ public class SpanCell {
         getSpannable();
     }
 
-    public SpannableString getSpannable() {
-        SpannableString spannableString;
+    public SpanCell text(CharSequence text) {
+        this.text = text;
+        return this;
+    }
+
+    public SpanCell textColor(int textColor) {
+        this.textColor = textColor;
+        return this;
+    }
+
+
+    public SpanCell textSize(float textSize) {
+        this.textSize = textSize;
+        return this;
+    }
+
+    public SpanCell imageSpan(ImageSpan imageSpan) {
+        this.imageSpan = imageSpan;
+        return this;
+    }
+
+    public SpanCell imageSpanInLast(boolean imageSpanInLast) {
+        isImageSpanInLast = imageSpanInLast;
+        return this;
+    }
+
+
+    public SpanCell clickableImage(ClickableSpan clickable) {
+        this.clickableImage = clickable;
+        return this;
+    }
+
+    public SpanCell clickableSpan(ClickableSpan clickable) {
+        this.clickableSpan = clickable;
+        return this;
+    }
+
+
+    public SpanCell(CharSequence text) {
+        this(text, null);
+    }
+
+    public SpanCell(ImageSpan imageSpan) {
+        this(Color.BLACK, dp2px(14), null, imageSpan);
+    }
+
+    public SpanCell(CharSequence text, ImageSpan imageSpan) {
+        this(Color.BLACK, dp2px(14), text, imageSpan);
+    }
+
+    public SpanCell(int textColor, float textSize, CharSequence text, ImageSpan imageSpan) {
+        this.textColor = textColor;
+        this.textSize = textSize;
+        this.text = TextUtils.isEmpty(text) ? "" : text;
+        this.imageSpan = imageSpan;
+    }
+
+
+    public static int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                Resources.getSystem().getDisplayMetrics());
+    }
+
+    public SpanCell(Context context, CharSequence text, int resourceId) {
+        this(text, new ImageSpannable(context, resourceId));
+    }
+
+
+    public CharSequence getSpannable() {
+
+        SpannableString textSpanString = new SpannableString(TextUtils.isEmpty(this.text) ? "" : this.text);
+        int start = 0, end = textSpanString.length();
+        ForegroundColorSpan span = new ForegroundColorSpan(textColor);
+        textSpanString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AbsoluteSizeSpan sizeSpan = new AbsoluteSizeSpan((int) textSize);
+        textSpanString.setSpan(sizeSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        SpannableString imageSpanString = null;
         if (imageSpan != null) {
-            CharSequence at = isImageSpanInLast ? text + "I" : "I" + text;
-            int start = isImageSpanInLast ? at.length() - 1 : 0;
-            int end = isImageSpanInLast ? at.length() : 1;
-
-            spannableString = new SpannableString(at);
-            spannableString.setSpan(this.imageSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            imageSpanString = new SpannableString(" ");
+            int s = 0, e = imageSpanString.length();
+            imageSpanString.setSpan(imageSpan, s, e, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             if (clickableImage != null) {
-                spannableString.setSpan(clickableImage, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            if (clickableSpan != null) {
-                start = isImageSpanInLast ? 0 : 1;
-                end = isImageSpanInLast ? at.length() - 1 : at.length();
-                spannableString.setSpan(clickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-        } else {
-            spannableString = new SpannableString(text);
-            if (clickableSpan != null) {
-                spannableString.setSpan(clickableSpan, 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                imageSpanString.setSpan(clickableImage,s,e,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
-        if (!TextUtils.isEmpty(text)) {
-
-
-            int start = 0;
-            int end = text.length();
-            if (imageSpan != null) {
-                start = isImageSpanInLast ? 0 : 1;
-                end = isImageSpanInLast ? text.length() - 1 : text.length();
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        if (isImageSpanInLast) {
+            builder.append(textSpanString);
+            if (imageSpanString != null) {
+                builder.append(imageSpanString);
             }
-            if (textColor != 0) {
-                ForegroundColorSpan span = new ForegroundColorSpan(textColor);
-                spannableString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else {
+            if (imageSpanString != null) {
+                builder.append(imageSpanString);
             }
-            if (textSize != 0) {
-                AbsoluteSizeSpan sizeSpan = new AbsoluteSizeSpan((int) textSize);
-                spannableString.setSpan(sizeSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+            builder.append(textSpanString);
         }
-
         if (clickableSpan != null) {
-            spannableString.setSpan(clickableSpan, 0, imageSpan != null ? text.length() + 1 : text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(clickableSpan,0,builder.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        return spannableString;
+        return builder.subSequence(0, builder.length());
     }
 }

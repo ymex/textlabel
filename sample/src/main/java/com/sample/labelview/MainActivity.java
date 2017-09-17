@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
+import cn.ymex.little.view.ImageSpannable;
+import cn.ymex.little.view.SpanCell;
 import cn.ymex.little.view.TextLabel;
 import cn.ymex.little.widget.Toaster;
 import cn.ymex.popup.dialog.PopupDialog;
@@ -13,6 +15,7 @@ import cn.ymex.popup.dialog.controller.AlertController;
 public class MainActivity extends AppCompatActivity {
 
     TextLabel textLabel;
+    TextLabel textSpanCellLable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toaster.init(this);
 
         textLabel = (TextLabel) findViewById(R.id.tv_label);
+        textSpanCellLable = (TextLabel) findViewById(R.id.tv_label_2);
         textLabel.setMovementMethod(LinkMovementMethod.getInstance());
 
         findViewById(R.id.btn_settext).setOnClickListener(new View.OnClickListener() {
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        textLabel.setOnTextLabelClickListener(TextLabel.SpanClickListener.onClick(new View.OnClickListener() {
+        textLabel.setStartSpanCellClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toaster.show("Hi mm");
@@ -40,9 +44,21 @@ public class MainActivity extends AppCompatActivity {
                                 .build()
                                 .title("提示")
                                 .message("message")
-                                .positiveButton("Ok",null))
+                                .positiveButton("Ok", null))
                         .show();
             }
-        }));
+        });
+
+        findViewById(R.id.btn_second).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                ImageSpannable imageSpannable = new ImageSpannable(MainActivity.this, R.mipmap.ic_launcher);
+                imageSpannable.setSize(480, 360);
+                SpanCell spanCell = new SpanCell("bbap", imageSpannable);
+                textSpanCellLable.setText(spanCell.getSpannable());
+            }
+        });
     }
 }

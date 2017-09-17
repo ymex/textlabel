@@ -44,17 +44,17 @@ public class TextLabel extends AppCompatTextView {
         int textColor = getTextColors().getDefaultColor();
         String text = getText().toString();
         float textSize = getTextSize();
-        textSpanCell = new SpanCell(textColor, textSize, text);
+        textSpanCell = SpanCell.build().text(text).textColor(textColor).textSize(textSize);
 
         String startText = typedArray.getString(R.styleable.TextLabel_startText);
         int startTextColor = typedArray.getColor(R.styleable.TextLabel_startTextColor, textColor);
         int startTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_startTextSize, (int) textSize);
-        startSpanCell = new SpanCell(startTextColor, startTextSize, startText);
+        startSpanCell = SpanCell.build().text(startText).textColor(startTextColor).textSize(startTextSize);
 
         String endText = typedArray.getString(R.styleable.TextLabel_endText);
         int endTextColor = typedArray.getColor(R.styleable.TextLabel_endTextColor, textColor);
         int endTextSize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_endTextSize, (int) textSize);
-        endSpanCell = new SpanCell(endTextColor, endTextSize, endText);
+        endSpanCell = SpanCell.build().text(endText).textColor(endTextColor).textSize(endTextSize);
 
         format = typedArray.getString(R.styleable.TextLabel_format);
 
@@ -147,13 +147,24 @@ public class TextLabel extends AppCompatTextView {
         return format;
     }
 
-    public void setOnTextLabelClickListener(SpanClickListener clickListener) {
-        if (textSpanCell != null) {
-            textSpanCell.setClickableSpan(clickListener);
-        }
 
+    public void setStartSpanCell(SpanCell startSpanCell) {
+        this.startSpanCell = startSpanCell;
     }
 
+    public void setEndSpanCell(SpanCell endSpanCell) {
+        this.endSpanCell = endSpanCell;
+    }
+
+    public void setTextSpanCell(SpanCell textSpanCell) {
+        this.textSpanCell = textSpanCell;
+    }
+
+    public void setStartSpanCellClickListener(OnClickListener onClickListener) {
+        if (this.startSpanCell != null) {
+            startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener));
+        }
+    }
 
     /**
      * click listener

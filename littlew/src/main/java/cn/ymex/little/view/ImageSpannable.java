@@ -1,19 +1,25 @@
 package cn.ymex.little.view;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 
 /**
- * 可居中的ImageSpan
+ * ImageSpan
  */
 
 public class ImageSpannable extends ImageSpan {
 
     private int ALIGN_FONTCENTER = 2;
+
+    int imgWidth, imgHeight;
 
     public ImageSpannable(Context context, int resourceId) {
         super(context, resourceId);
@@ -21,6 +27,24 @@ public class ImageSpannable extends ImageSpan {
 
     public ImageSpannable(Context context, int resourceId, int verticalAlignment) {
         super(context, resourceId, verticalAlignment);
+    }
+
+    /**
+     * @param width
+     * @param height
+     */
+    public void setSize(int width, int height) {
+        this.imgWidth = width;
+        this.imgHeight = height;
+    }
+
+    @Override
+    public Drawable getDrawable() {
+        Drawable drawable = super.getDrawable();
+        if (drawable != null && imgWidth > 0 && imgHeight > 0) {
+            drawable.setBounds(0, 0, imgWidth, imgHeight);
+        }
+        return drawable;
     }
 
     @Override
@@ -46,6 +70,7 @@ public class ImageSpannable extends ImageSpan {
     }
 
 
+    @Override
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
         Drawable d = getDrawable();
         Rect rect = d.getBounds();
