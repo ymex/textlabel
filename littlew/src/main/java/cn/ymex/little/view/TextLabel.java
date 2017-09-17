@@ -8,6 +8,7 @@ import android.support.annotation.StyleableRes;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
@@ -106,7 +107,6 @@ public class TextLabel extends AppCompatTextView {
         if (attrs != null) {
             dealAttr(attrs);
         }
-        //this.setLinkTextColor(getTextColors());
         this.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
         this.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
     }
@@ -114,6 +114,10 @@ public class TextLabel extends AppCompatTextView {
     @Override
     public CharSequence getText() {
         return textSpanCell == null ? super.getText() : textSpanCell.text;
+    }
+
+    public void setText(SpanCell... spanCells) {
+        setText(buildSpannableString(spanCells));
     }
 
     /**
@@ -161,10 +165,15 @@ public class TextLabel extends AppCompatTextView {
      * @param args   parameter
      */
     public void setTextf(CharSequence format, Object... args) {
+        if (TextUtils.isEmpty(format)) {
+            this.setText("");
+            return;
+        }
         if (args == null || args.length == 0) {
             this.setText(format);
             return;
         }
+
         this.setText(String.format(format.toString(), args));
     }
 
@@ -203,6 +212,16 @@ public class TextLabel extends AppCompatTextView {
     public void setStartSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.startSpanCell != null) {
             startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, startSpanCell));
+        }
+    }
+    public void setTextSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
+        if (this.textSpanCell != null) {
+            textSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, textSpanCell));
+        }
+    }
+    public void setEndSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
+        if (this.endSpanCell != null) {
+            endSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, endSpanCell));
         }
     }
 

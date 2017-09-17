@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
                 ImageSpannable imageSpannable = new ImageSpannable(MainActivity.this, R.mipmap.ic_launcher);
                 imageSpannable.setSize(480, 360);
                 SpanCell spanCell = new SpanCell("bbap", imageSpannable);
