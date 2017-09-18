@@ -44,9 +44,24 @@ public class TextLabel extends AppCompatTextView {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TextLabel, 0, 0);
 
         int textColor = getTextColors().getDefaultColor();
+        int linkColor = getLinkTextColors().getDefaultColor();
         String text = getText().toString();
         float textSize = getTextSize();
-        textSpanCell = SpanCell.build().text(text).textColor(textColor).textSize(textSize);
+        int tDrawable = typedArray.getResourceId(R.styleable.TextLabel_textDrawable, -1);
+        int tDsize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_textDrawableSize, -1);
+        boolean isLast = typedArray.getBoolean(R.styleable.TextLabel_textDrawableInLast, false);
+        int v = typedArray.getInt(R.styleable.TextLabel_textDrawableVerticalAlignment, ImageSpannable.ALIGN_FONTCENTER);
+        ImageSpannable imageSpan = null;
+        if (tDrawable > 0) {
+            imageSpan = new ImageSpannable(getContext(), tDrawable, v);
+            if (tDsize > 0) {
+                imageSpan.setSize(tDsize, tDsize);
+            }
+        }
+        textSpanCell = SpanCell.build().text(text)
+                .textColor(textColor).textSize(textSize)
+                .linkColor(linkColor)
+                .imageSpan(imageSpan).imageSpanInLast(isLast);
 
         startSpanCell = resolveAttr(typedArray, R.styleable.TextLabel_startText,
                 R.styleable.TextLabel_startTextColor,
@@ -56,7 +71,7 @@ public class TextLabel extends AppCompatTextView {
                 R.styleable.TextLabel_startDrawableSize,
                 R.styleable.TextLabel_startDrawableInLast,
                 R.styleable.TextLabel_startDrawableVerticalAlignment,
-                textColor, (int) textSize);
+                textColor, (int) textSize, linkColor);
 
         endSpanCell = resolveAttr(typedArray, R.styleable.TextLabel_endText,
                 R.styleable.TextLabel_endTextColor,
@@ -66,7 +81,7 @@ public class TextLabel extends AppCompatTextView {
                 R.styleable.TextLabel_endDrawableSize,
                 R.styleable.TextLabel_endDrawableInLast,
                 R.styleable.TextLabel_endDrawableVerticalAlignment,
-                textColor, (int) textSize);
+                textColor, (int) textSize, linkColor);
         format = typedArray.getString(R.styleable.TextLabel_format);
         typedArray.recycle();
     }
@@ -76,12 +91,12 @@ public class TextLabel extends AppCompatTextView {
                                  @StyleableRes int textSize, @StyleableRes int linkColor,
                                  @StyleableRes int drawable, @StyleableRes int drawableSize,
                                  @StyleableRes int drawableInlast, @StyleableRes int verticalAlignment,
-                                 int defTextColor, int defTextSize) {
+                                 int defTextColor, int defTextSize, int defLinkColor) {
 
         String t = typedArray.getString(text);
         int tColor = typedArray.getColor(textColor, defTextColor);
         int tSize = typedArray.getDimensionPixelSize(textSize, defTextSize);
-        int tlinkColor = typedArray.getColor(linkColor, defTextColor);
+        int tlinkColor = typedArray.getColor(linkColor, defLinkColor);
         int tDrawable = typedArray.getResourceId(drawable, -1);
         int tDsize = typedArray.getDimensionPixelSize(drawableSize, -1);
         boolean isLast = typedArray.getBoolean(drawableInlast, false);

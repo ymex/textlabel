@@ -12,34 +12,23 @@
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="16dip"
         android:text="2000"
-        app:startDrawable="@mipmap/ic_launcher"
-        app:startTextColor="@color/blue_dark"
-        app:startText="金额："
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:endText="元"
         app:endTextColor="@color/blue_dark"
+        app:startDrawable="@mipmap/ic_launcher"
         app:startDrawableSize="24dip"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        app:startText="金额："
+        android:clickable="false"
+        android:focusable="false"
+        android:longClickable="false"
+        app:startTextColor="@color/blue_dark" />
+    <ListView
+        android:id="@+id/lv_listview"
 
-    <Button
-        android:id="@+id/btn_settext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dip"
-        android:text="setText()" />
-
-    <cn.ymex.view.label.TextLabel
-        android:id="@+id/tv_label_2"
-        android:layout_width="wrap_content"
-        android:text="@string/title"
-        android:padding="8dip"
-        android:textSize="16sp"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btn_second"
-        android:text="set spancell"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"/>
 </LinearLayout>
