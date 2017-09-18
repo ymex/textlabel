@@ -8,7 +8,7 @@
     tools:context="com.sample.labelview.MainActivity">
 
 
-    <cn.ymex.textlabel.view.TextLabel
+    <cn.ymex.view.textlabel.TextLabel
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:layout_marginTop="8dip"
         android:text="setText()" />
 
-    <cn.ymex.textlabel.view.TextLabel
+    <cn.ymex.view.textlabel.TextLabel
         android:id="@+id/tv_label_2"
         android:layout_width="wrap_content"
         android:text="@string/title"

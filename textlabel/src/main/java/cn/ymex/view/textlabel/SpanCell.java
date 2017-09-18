@@ -1,4 +1,4 @@
-package cn.ymex.textlabel.view;
+package cn.ymex.view.textlabel;
 
 import android.content.Context;
 import android.content.res.Resources;

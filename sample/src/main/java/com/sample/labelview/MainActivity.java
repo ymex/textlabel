@@ -5,10 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
-import cn.ymex.textlabel.view.ImageSpannable;
-import cn.ymex.textlabel.view.SpanCell;
-import cn.ymex.textlabel.view.TextLabel;
-import cn.ymex.textlabel.widget.Toaster;
+import cn.ymex.view.textlabel.ImageSpannable;
+import cn.ymex.view.textlabel.SpanCell;
+import cn.ymex.view.textlabel.TextLabel;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.dialog.controller.AlertController;
 
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toaster.init(this);
 
         textLabel = (TextLabel) findViewById(R.id.tv_label);
         textSpanCellLable = (TextLabel) findViewById(R.id.tv_label_2);
@@ -38,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         textLabel.setStartSpanCellClickListener(new SpanCell.OnClickListener() {
             @Override
             public void onClick(View view,SpanCell cell) {
-                Toaster.show("Hi mm");
                 PopupDialog.create(MainActivity.this)
                         .controller(AlertController
                                 .build()
