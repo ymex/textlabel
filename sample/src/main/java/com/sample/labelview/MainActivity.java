@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
-import cn.ymex.view.textlabel.ImageSpannable;
-import cn.ymex.view.textlabel.SpanCell;
-import cn.ymex.view.textlabel.TextLabel;
+import cn.ymex.view.label.ImageSpannable;
+import cn.ymex.view.label.SpanCell;
+import cn.ymex.view.label.TextLabel;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.dialog.controller.AlertController;
 
