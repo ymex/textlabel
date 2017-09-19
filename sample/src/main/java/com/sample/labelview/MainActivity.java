@@ -63,20 +63,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        int  num=new Random().nextInt(100);
         switch (i) {
             case 0:
-                textLabel.setText("随机数"+(new Random().nextInt()));
+                textLabel.setText("随机文字"+num);
                 break;
 
             case 1:
-                textLabel.getStartSpanCell().text("Start SpanCell").textColor(getResources().getColor(R.color.blue_light));
+                textLabel.getStartSpanCell().text("START"+num).textColor(getResources().getColor(R.color.blue_light));
                 textLabel.setText(textLabel.getText());
                 break;
 
             case 2:
                 ImageSpannable spannable = new ImageSpannable(this,R.mipmap.amalia);
                 spannable.setSize(80, 40);
-                textLabel.getEndSpanCell().text(" SpanCell").imageSpan(spannable).imageSpanInLast(false);
+                textLabel.getEndSpanCell().text("END"+num).imageSpan(spannable).imageSpanInLast(false);
 
                 textLabel.setText(textLabel.getText());
                 break;
