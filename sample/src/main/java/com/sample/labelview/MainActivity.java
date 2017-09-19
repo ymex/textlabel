@@ -1,10 +1,12 @@
 package com.sample.labelview;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.text.Spannable;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
@@ -27,6 +29,9 @@ import cn.ymex.view.label.TextLabel;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.dialog.controller.AlertController;
 
+import static android.text.style.DynamicDrawableSpan.ALIGN_BASELINE;
+import static android.text.style.DynamicDrawableSpan.ALIGN_BOTTOM;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     TextLabel textLabel;
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         textLabel = (TextLabel) findViewById(R.id.tv_label);
         listView = (ListView) findViewById(R.id.lv_listview);
 
-        TextAdapter adapter = new TextAdapter();
+        TextAdapter adapter = new TextAdapter(this, textLabel);
         adapter.setData(getThemeData());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -52,39 +57,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private List<Item> getThemeData() {
         return new ArrayList<Item>() {{
             add(new Item("setText()","设置内容头尾片段是不会改变的"));
-            add(new Item("setStartSpanCell(spancell)","动态设置头片段"));
-            add(new Item("setEndSpanCell(spancell)","动态设置尾片段"));
-            add(new Item("单独的图文片段（SpanCell）"));
             add(new Item("设置SpanCell点击事件"));
             add(new Item("多SpanCell片段组合,与片段独立的点击事件"));
+            add(new Item("图文混排"));
         }};
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int  num=new Random().nextInt(100);
-        switch (i) {
-            case 0:
-                textLabel.setText("随机文字"+num);
-                break;
 
-            case 1:
-                textLabel.getStartSpanCell().text("START"+num).textColor(getResources().getColor(R.color.blue_light));
-                textLabel.setText(textLabel.getText());
-                break;
-
-            case 2:
-                ImageSpannable spannable = new ImageSpannable(this,R.mipmap.amalia);
-                spannable.setSize(80, 40);
-                textLabel.getEndSpanCell().text("END"+num).imageSpan(spannable).imageSpanInLast(false);
-
-                textLabel.setText(textLabel.getText());
-                break;
-        }
     }
 
     public static class TextAdapter extends ListViewAdapter<Item, ListViewAdapter.ViewHolder> {
+        TextLabel tb;
+        Context context ;
+
+        public TextAdapter(Context context, TextLabel tb) {
+            this.context =context;
+            this.tb = tb;
+        }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
@@ -101,15 +93,54 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             textLabel.getStartSpanCell().imageSpan(null).text("");
             textLabel.getEndSpanCell().imageSpan(null).text("");
             switch (position) {
+                case 0:
+                    final int  num=new Random().nextInt(100);
+                    SpanCell sc21 = SpanCell.build()
+                            .text(" 设置内容 ")
+                            .textColor(convertView.getResources().getColor(R.color.color_4))
+                            .linkColor(convertView.getResources().getColor(R.color.color_4));
+                    sc21.setClickableSpan(new SpanCell.OnClickListener() {
+                        @Override
+                        public void onClick(View view, SpanCell spanCell) {
+                            tb.setText("内容文字"+num);
+                        }
+                    });
 
+                    SpanCell sc31 = SpanCell.build()
+                            .text("设置头片段 ")
+                            .textColor(convertView.getResources().getColor(R.color.color_5))
+                            .linkColor(convertView.getResources().getColor(R.color.color_5));
+                    sc31.setClickableSpan(new SpanCell.OnClickListener() {
+                        @Override
+                        public void onClick(View view, SpanCell spanCell) {
+                            tb.getStartSpanCell().text("START"+num).textColor(convertView.getContext().getResources().getColor(R.color.blue_light));
+                            tb.setText(tb.getText());
+                        }
+                    });
+                    ImageSpannable sc41image = new ImageSpannable(convertView.getContext(), R.mipmap.ic_launcher);
+                    sc41image.setSize(48, 48);
+                    SpanCell sc41 = SpanCell.build()
+                            .text(" 设置尾片段 ")
+                            .imageSpan(sc41image)
+                            .imageSpanInLast(true)
+                            .textColor(convertView.getResources().getColor(R.color.color_6))
+                            .linkColor(convertView.getResources().getColor(R.color.color_6));
+                    sc41.setClickableSpan(new SpanCell.OnClickListener() {
+                        @Override
+                        public void onClick(View view, SpanCell spanCell) {
+                            ImageSpannable spannable = new ImageSpannable(convertView.getContext(),R.mipmap.amalia);
+                            spannable.setSize(80, 40);
+                            tb.getEndSpanCell().text("END"+num).imageSpan(spannable).imageSpanInLast(false);
 
-                case 3:
-                    ImageSpannable imageSpannable = new ImageSpannable(convertView.getContext(), R.mipmap.ic_launcher);
-                    imageSpannable.setSize(48, 48);
-                    textLabel.setText(SpanCell.build().text("设置右边图片").imageSpan(imageSpannable).imageSpanInLast(false));
+                            tb.setText(tb.getText());
+                        }
+                    });
+
+                    textLabel.setText(sc21, sc31, sc41);
                     break;
 
-                case 4:
+
+                case 1:
                     textLabel.getStartSpanCell().text("查看协议：");
                     textLabel.getEndSpanCell().text("点击查看.").setTextSize(36);
 
@@ -134,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     break;
 
-                case 5:
+                case 2:
                     SpanCell sc2 = SpanCell.build()
                             .text("文字片段-1 ")
                             .textColor(convertView.getResources().getColor(R.color.color_1))
@@ -142,20 +173,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     sc2.setClickableSpan(new SpanCell.OnClickListener() {
                         @Override
                         public void onClick(View view, SpanCell spanCell) {
-                            Toast.makeText(convertView.getContext(),spanCell.getText(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(convertView.getContext(), spanCell.getText(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
-                    SpanCell sc3 = SpanCell.build()
-                            .text(" 文字片段-2 ")
-                            .textColor(convertView.getResources().getColor(R.color.color_2))
-                            .linkColor(convertView.getResources().getColor(R.color.color_2));
-                    sc3.setClickableSpan(new SpanCell.OnClickListener() {
-                        @Override
-                        public void onClick(View view, SpanCell spanCell) {
-                            Toast.makeText(convertView.getContext(),spanCell.getText(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
                     ImageSpannable sc4image = new ImageSpannable(convertView.getContext(), R.mipmap.ic_launcher);
                     sc4image.setSize(48, 48);
                     SpanCell sc4 = SpanCell.build()
@@ -167,15 +189,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     sc4.setClickableSpan(new SpanCell.OnClickListener() {
                         @Override
                         public void onClick(View view, SpanCell spanCell) {
-                            Toast.makeText(convertView.getContext(),spanCell.getText(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(convertView.getContext(), spanCell.getText(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
-                    textLabel.setText(sc2,sc3,sc4);
+                    textLabel.setText(sc2,sc4);
+                    break;
+                case 3:
+                    Context context = convertView.getContext();
+                    ImageSpannable forgimg = new ImageSpannable(context, R.mipmap.frog);
+                    SpanCell span1 = SpanCell.build().text("一只小青蛙").imageSpanInLast(true).imageSpan(forgimg);
+                    ImageSpannable deerimg = new ImageSpannable(context, R.mipmap.deer);
+                    SpanCell span2 = SpanCell.build().text(",发现了一只受伤的小鹿").imageSpan(deerimg).imageSpanInLast(true);
+                    ImageSpannable hippoimg = new ImageSpannable(context, R.mipmap.hippo, ImageSpannable.ALIGN_FONTCENTER);
+                    hippoimg.setSize(64,64);
+                    SpanCell span3 = SpanCell.build().text("于是它去寻求小牛").imageSpanInLast(true).imageSpan(hippoimg);
+
+                    ImageSpannable owlimg = new ImageSpannable(context, R.mipmap.owl, ImageSpannable.ALIGN_FONTCENTER);
+                    owlimg.setSize(160, 160);
+                    SpanCell span4 = SpanCell.build().imageSpanInLast(true).
+                            text("的帮助。小牛说，不帮不帮就不帮。。于是小青蛙又去向其他 动物寻求帮助。于是它找到了猫头鹰").imageSpan(owlimg);
+                    SpanCell span5 = SpanCell.build().text(",于是他们一起愉快的喝可乐 ！呵呵");
+                    textLabel.setText(span1,span2,span3,span4,span5);
                     break;
             }
-
         }
+
+
     }
 
     private class Item {

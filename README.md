@@ -4,7 +4,82 @@ label textview  for android
 ## TextLabel
 用于处理要需要格式化TextView 及简单的图文混排的情况。可在TextLabel中设置文字的颜色，尺寸，及可点击的字符。
 
+TextLabel可独立设置一个固定头片段和一个尾片段。每个图文片段（SpanCell）都可以独门设置颜色，图片，大小，点击事件。
+TextLabel依赖SpanCell实现图文混排 。一个SpanCell由文字与一个图片组成，基于SpanCell可实现混排效果。 
 
+## 使用场景
+
+### 标签化
+
+开发中常遇到上面这种场景，通常我们用使用以下访求去格式化。
+```
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dip"
+    android:paddingLeft="8dip"
+    android:text="100"/>
+
+textView.setText(String.format("金额：%1$s元"),money);
+
+```
+使用`TextLabel`后我们就可以这样使用
+```
+<cn.ymex.view.label.TextLabel
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dip"
+    android:paddingLeft="8dip"
+    android:text="100"
+    app:endText="元"
+    app:startDrawable="@mipmap/money1"
+    app:startDrawableSize="24dp"
+    app:startText=" 金额：" />
+    
+textLabel.setText(100);
+```
+### 部分文字可点击及换色
+
+```
+textLabel.getStartSpanCell().text("查看协议：");
+textLabel.getEndSpanCell().text("点击查看.").setTextSize(36);
+
+SpanCell sp = SpanCell.build()
+        .textColor(Color.parseColor("#887acc"))
+        .text("《用户协议》");
+
+sp.setClickableSpan(new SpanCell.OnClickListener() {
+    @Override
+    public void onClick(View view, SpanCell spanCell) {
+        //....
+    }
+});
+
+textLabel.setText(sp);
+```
+
+
+### 文字混排 
+
+使用
+
+```
+ Context context = convertView.getContext();
+ImageSpannable forgimg = new ImageSpannable(context, R.mipmap.frog);
+SpanCell span1 = SpanCell.build().text("一只小青蛙").imageSpanInLast(true).imageSpan(forgimg);
+ImageSpannable deerimg = new ImageSpannable(context, R.mipmap.deer);
+SpanCell span2 = SpanCell.build().text(",发现了一只受伤的小鹿").imageSpan(deerimg).imageSpanInLast(true);
+ImageSpannable hippoimg = new ImageSpannable(context, R.mipmap.hippo, ImageSpannable.ALIGN_FONTCENTER);
+hippoimg.setSize(64,64);
+SpanCell span3 = SpanCell.build().text("于是它去寻求小牛").imageSpanInLast(true).imageSpan(hippoimg);
+
+ImageSpannable owlimg = new ImageSpannable(context, R.mipmap.owl, ImageSpannable.ALIGN_FONTCENTER);
+owlimg.setSize(160, 160);
+SpanCell span4 = SpanCell.build().imageSpanInLast(true).
+        text("的帮助。小牛说，不帮不帮就不帮。。于是小青蛙又去向其他 动物寻求帮助。于是它找到了猫头鹰").imageSpan(owlimg);
+SpanCell span5 = SpanCell.build().text(",于是他们一起愉快的喝可乐 ！呵呵");
+textLabel.setText(span1,span2,span3,span4,span5);
+```
 
 License
 -------

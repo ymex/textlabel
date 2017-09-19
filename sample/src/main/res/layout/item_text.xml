@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="16dip">
+              android:padding="12dip">
 
     <cn.ymex.view.label.TextLabel
         android:id="@+id/tl_demo"
@@ -15,6 +15,6 @@
         android:id="@+id/tv_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
+        android:layout_marginTop="8dip"
         android:text="描述"/>
 </LinearLayout>

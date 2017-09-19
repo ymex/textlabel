@@ -9,36 +9,53 @@
 
 
     <cn.ymex.view.label.TextLabel
-        android:padding="8dip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="16dp"
-        android:text="SpanCell图文片段（简称片段或SpanCell）。TextLabel可独立设置一个固定头片段和一个尾片段。每片段（SpanCell）都可以独门设置颜色，图片，大小，点击事件。 "/>
+        android:layout_marginTop="4dip"
+        android:paddingLeft="8dip"
+        android:text="100"
+        app:endText="元"
+        app:startDrawable="@mipmap/money1"
+        app:startDrawableSize="24dp"
+        app:startText=" 金额：" />
+
+    <cn.ymex.view.label.TextLabel
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:paddingLeft="8dip"
+        android:text="888888888888"
+        app:startDrawable="@mipmap/money10"
+        app:startDrawableSize="24dp"
+        app:startText=" 卡号：" />
 
 
     <cn.ymex.view.label.TextLabel
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="16dp"
-        app:startDrawable="@mipmap/amalia"
-        app:startText="头片段文字"
-        android:text="默认文字"
-        app:endText="尾片段文字"
-        app:endTextSize="14sp"
-        app:endDrawable="@mipmap/ic_launcher"
-        app:endDrawableSize="24dip"
+        android:layout_marginBottom="12dip"
+        android:layout_marginTop="4dip"
+        android:padding="8dip"
+        android:text="内容区"
+        android:textSize="14dp"
         app:endDrawableInLast="true"
+        app:endDrawableSize="24dip"
+        app:endText="尾片段"
         app:endTextColor="@color/color_2"
-        android:layout_marginTop="16dip"
-        android:layout_marginBottom="16dip"/>
+        app:endTextSize="14sp"
+        app:startDrawable="@mipmap/amalia"
+        app:startText="头片段："
+        app:startTextColor="@color/color_3" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#e0e0e0" />
 
 
     <ListView
         android:id="@+id/lv_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>
