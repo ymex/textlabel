@@ -1,10 +1,9 @@
 [ ![Download](https://api.bintray.com/packages/ymex/maven/textlabel/images/download.svg) ](https://bintray.com/ymex/maven/textlabel/_latestVersion)
 
 # TextLabel
-label textview  for android
+用于处理要需要格式化TextView 及简单的图文混排的情况。可在TextLabel中设置文字的颜色，尺寸，及可点击事件。
 
 ## TextLabel
-用于处理要需要格式化TextView 及简单的图文混排的情况。可在TextLabel中设置文字的颜色，尺寸，及可点击的字符。
 
 TextLabel可独立设置一个固定头片段和一个尾片段。每个图文片段（SpanCell）都可以独门设置颜色，图片，大小，点击事件。
 TextLabel依赖SpanCell实现图文混排 。一个SpanCell由文字与一个图片组成，基于SpanCell可实现混排效果。 
