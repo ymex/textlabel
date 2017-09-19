@@ -6,7 +6,6 @@ label textview  for android
 
 
 
-
 License
 -------
 
