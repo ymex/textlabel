@@ -1,5 +1,6 @@
 package com.sample.labelview;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return new ArrayList<String>() {{
             add("图文单元");
             add("设置点击事件");
+            add("span cell ");
         }};
 
     }
@@ -61,15 +63,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 0:
                 ImageSpannable imageSpannable = new ImageSpannable(MainActivity.this, R.mipmap.ic_launcher);
                 imageSpannable.setSize(48, 48);
-                SpanCell spanCell = new SpanCell("设置右边图片", imageSpannable);
-                spanCell.imageSpanInLast(true);
+                SpanCell spanCell00 = new SpanCell("设置右边图片", imageSpannable);
+                spanCell00.imageSpanInLast(true);
 
-                textLabel.setText(spanCell);
+                textLabel.setText(spanCell00);
                 break;
             case 1:
-                final SpanCell spanCell1 = new SpanCell("点击事件");
+                textLabel.getStartSpanCell().imageSpan(null).text("查看协议：");
 
-                spanCell1.setClickableSpan(new SpanCell.OnClickListener() {
+                SpanCell sp = SpanCell.build()
+                        .textColor(Color.parseColor("#887acc"))
+                        .text("用户");
+
+                sp.setClickableSpan(new SpanCell.OnClickListener() {
                     @Override
                     public void onClick(View view, SpanCell spanCell) {
                         PopupDialog.create(MainActivity.this)
@@ -81,8 +87,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 .show();
                     }
                 });
-                textLabel.setText(spanCell1);
 
+                textLabel.setText(sp);
+
+                break;
+
+            case 2:
+                SpanCell sc2 = SpanCell.build()
+                        .text("AB")
+                        .textColor(getResources().getColor(R.color.color_1));
+
+                SpanCell sc3 = SpanCell.build()
+                        .text("CD")
+                        .textColor(getResources().getColor(R.color.color_2));
+                SpanCell sc4 = SpanCell.build()
+                        .text("EF")
+                        .textColor(getResources().getColor(R.color.color_3));
+
+
+
+
+                textLabel.setText(sc2,sc3,sc4);
                 break;
         }
     }

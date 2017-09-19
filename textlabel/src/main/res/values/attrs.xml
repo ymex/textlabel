@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TextLabel">
-        <attr name="format" format="string" />
+        <attr name="format" format="string"/>
 
-
-        <attr name="textDrawable" format="reference" />
-        <attr name="textDrawableSize" format="dimension" />
-        <attr name="textDrawableInLast" format="boolean" />
-        <attr name="textDrawableVerticalAlignment" format="enum">
-            <enum name="ALIGN_BOTTOM" value="0" />
-            <enum name="ALIGN_BASELINE" value="1" />
-            <enum name="ALIGN_CENTER" value="2" />
-        </attr>
-
-        <attr name="startText" format="string|reference" />
-        <attr name="startTextColor" format="color|reference" />
-        <attr name="startLinkColor" format="color" />
-        <attr name="startTextSize" format="dimension" />
-        <attr name="startDrawable" format="reference" />
-        <attr name="startDrawableSize" format="dimension" />
-        <attr name="startDrawableInLast" format="boolean" />
+        <attr name="startText" format="string|reference"/>
+        <attr name="startTextColor" format="color|reference"/>
+        <attr name="startLinkColor" format="color"/>
+        <attr name="startTextSize" format="dimension"/>
+        <attr name="startDrawable" format="reference"/>
+        <attr name="startDrawableSize" format="dimension"/>
+        <attr name="startDrawableInLast" format="boolean"/>
         <attr name="startDrawableVerticalAlignment" format="enum">
-            <enum name="ALIGN_BOTTOM" value="0" />
-            <enum name="ALIGN_BASELINE" value="1" />
-            <enum name="ALIGN_CENTER" value="2" />
+            <enum name="ALIGN_BOTTOM" value="0"/>
+            <enum name="ALIGN_BASELINE" value="1"/>
+            <enum name="ALIGN_CENTER" value="2"/>
         </attr>
 
-        <attr name="endText" format="string|reference" />
-        <attr name="endTextSize" format="dimension" />
-        <attr name="endTextColor" format="color|reference" />
-        <attr name="endLinkColor" format="color" />
-        <attr name="endDrawable" format="reference" />
-        <attr name="endDrawableSize" format="dimension" />
-        <attr name="endDrawableInLast" format="boolean" />
+        <attr name="endText" format="string|reference"/>
+        <attr name="endTextSize" format="dimension"/>
+        <attr name="endTextColor" format="color|reference"/>
+        <attr name="endLinkColor" format="color"/>
+        <attr name="endDrawable" format="reference"/>
+        <attr name="endDrawableSize" format="dimension"/>
+        <attr name="endDrawableInLast" format="boolean"/>
         <attr name="endDrawableVerticalAlignment" format="enum">
-            <enum name="ALIGN_BOTTOM" value="0" />
-            <enum name="ALIGN_BASELINE" value="1" />
-            <enum name="ALIGN_CENTER" value="2" />
+            <enum name="ALIGN_BOTTOM" value="0"/>
+            <enum name="ALIGN_BASELINE" value="1"/>
+            <enum name="ALIGN_CENTER" value="2"/>
         </attr>
     </declare-styleable>
 </resources>

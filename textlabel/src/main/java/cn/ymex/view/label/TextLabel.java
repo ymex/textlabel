@@ -80,21 +80,10 @@ public class TextLabel extends AppCompatTextView {
         int linkColor = getLinkTextColors().getDefaultColor();
         String text = getText().toString();
         float textSize = getTextSize();
-        int tDrawable = typedArray.getResourceId(R.styleable.TextLabel_textDrawable, -1);
-        int tDsize = typedArray.getDimensionPixelSize(R.styleable.TextLabel_textDrawableSize, -1);
-        boolean isLast = typedArray.getBoolean(R.styleable.TextLabel_textDrawableInLast, false);
-        int v = typedArray.getInt(R.styleable.TextLabel_textDrawableVerticalAlignment, ImageSpannable.ALIGN_FONTCENTER);
-        ImageSpannable imageSpan = null;
-        if (tDrawable > 0) {
-            imageSpan = new ImageSpannable(getContext(), tDrawable, v);
-            if (tDsize > 0) {
-                imageSpan.setSize(tDsize, tDsize);
-            }
-        }
+
         textSpanCell = SpanCell.build().text(text)
                 .textColor(textColor).textSize(textSize)
-                .linkColor(linkColor)
-                .imageSpan(imageSpan).imageSpanInLast(isLast);
+                .linkColor(linkColor);
 
         startSpanCell = resolveAttr(typedArray, R.styleable.TextLabel_startText,
                 R.styleable.TextLabel_startTextColor,
@@ -185,6 +174,16 @@ public class TextLabel extends AppCompatTextView {
         super.setText(text, type);
     }
 
+    public void setText(SpanCell... spanCells) {
+        if (spanCells == null || spanCells.length <= 0) {
+            return;
+        }
+        textSpanCell.textColor(spanCells[0].getTextColor())
+                .textSize(spanCells[0].getTextSize())
+                .linkColor(spanCells[0].getLinkColor());
+        setText(buildSpannableString(spanCells));
+    }
+
 
     /**
      * 格式化 setText();
@@ -193,10 +192,6 @@ public class TextLabel extends AppCompatTextView {
      */
     public void setTextFormat(Object... args) {
         setTextFormatStr(this.stringFormat, args);
-    }
-
-    public void setText(SpanCell... spanCells) {
-        setText(buildSpannableString(spanCells));
     }
 
     /**
@@ -256,8 +251,13 @@ public class TextLabel extends AppCompatTextView {
         this.endSpanCell = endSpanCell;
     }
 
-    public void setTextSpanCell(SpanCell textSpanCell) {
-        this.textSpanCell = textSpanCell;
+
+    public SpanCell getStartSpanCell() {
+        return startSpanCell;
+    }
+
+    public SpanCell getEndSpanCell() {
+        return endSpanCell;
     }
 
     public void setStartSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
@@ -266,11 +266,6 @@ public class TextLabel extends AppCompatTextView {
         }
     }
 
-    public void setTextSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
-        if (this.textSpanCell != null) {
-            textSpanCell.setClickableSpan(onClickListener);
-        }
-    }
 
     public void setEndSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.endSpanCell != null) {

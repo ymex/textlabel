@@ -58,7 +58,6 @@ public class SpanCell {
     }
 
 
-
     public CharSequence getText() {
         return text;
     }
@@ -85,19 +84,21 @@ public class SpanCell {
 
     /**
      * 图文点击事件
+     *
      * @param listener
      */
     public void setClickableSpan(OnClickListener listener) {
-        this.clickableSpan = SpanCell.SpanClickListener.onClick(listener,this);
+        this.clickableSpan = SpanCell.SpanClickListener.onClick(listener, this);
         getSpannable();
     }
 
     /**
      * 图片点击事件
+     *
      * @param listener
      */
     public void setClickableImage(OnClickListener listener) {
-        this.clickableImage = SpanCell.SpanClickListener.onClick(listener,this);
+        this.clickableImage = SpanCell.SpanClickListener.onClick(listener, this);
     }
 
     public SpanCell text(CharSequence text) {
@@ -125,7 +126,6 @@ public class SpanCell {
         isImageSpanInLast = imageSpanInLast;
         return this;
     }
-
 
 
     public SpanCell linkColor(int linkColor) {
@@ -170,6 +170,7 @@ public class SpanCell {
         int start = 0, end = textSpanString.length();
         ForegroundColorSpan span = new ForegroundColorSpan(textColor);
         textSpanString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         AbsoluteSizeSpan sizeSpan = new AbsoluteSizeSpan((int) textSize);
         textSpanString.setSpan(sizeSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 

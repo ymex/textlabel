@@ -14,19 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dip"
-        android:layout_marginBottom="16dip"
-        android:text="2000"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:endText="元"
-        app:endTextColor="@color/blue_dark"
-        app:startDrawable="@mipmap/ic_launcher"
-        app:startDrawableSize="24dip"
-        app:startText="金额："
-        android:clickable="false"
-        android:focusable="false"
-        android:longClickable="false"
-        app:startTextColor="@color/blue_dark" />
+        android:layout_marginBottom="16dip"/>
     <ListView
         android:id="@+id/lv_listview"
 
