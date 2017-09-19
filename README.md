@@ -1,3 +1,5 @@
+[ ![Download](https://api.bintray.com/packages/ymex/maven/textlabel/images/download.svg) ](https://bintray.com/ymex/maven/textlabel/_latestVersion)
+
 # TextLabel
 label textview  for android
 
@@ -11,7 +13,7 @@ TextLabel依赖SpanCell实现图文混排 。一个SpanCell由文字与一个图
 ![使用场景](https://github.com/ymex/textlabel/blob/master/art/default.png)
 ### 标签化
 ![标签化](https://github.com/ymex/textlabel/blob/master/art/textlabel.png)
-开发中常遇到上面这种场景，通常我们用使用以下访求去格式化。
+<br>开发中常遇到上面这种场景，通常我们用使用以下访求去格式化。
 ```
 <TextView
     android:layout_width="wrap_content"
@@ -36,9 +38,24 @@ textView.setText(String.format("金额：%1$s元"),money);
     app:startDrawableSize="24dp"
     app:startText=" 金额：" />
     
-textLabel.setText(100);
+textLabel.setText(money);
 ```
+或者
+
+```
+<cn.ymex.view.label.TextLabel
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dip"
+    android:paddingLeft="8dip"
+    android:text="100"
+    app:format="金额：%1$s元" />
+    
+textLabel.setTextFormat(money);
+```
+
 ### 部分文字可点击及换色
+
 ![可点击](https://github.com/ymex/textlabel/blob/master/art/click.png)
 ```
 textLabel.getStartSpanCell().text("查看协议：");
@@ -61,7 +78,7 @@ textLabel.setText(sp);
 
 ### 文字混排 
 ![文字混排](https://github.com/ymex/textlabel/blob/master/art/text_pic.png)
-使用
+
 
 ```
  Context context = convertView.getContext();
