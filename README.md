@@ -54,7 +54,7 @@ textLabel.setTextFormat(money);
 ```
 
 ### 部分文字可点击及换色
-开发中经常遇到使TextView的部分文字设置不同的颜色，并可点击 。如下图
+开发中经常遇到使TextView的部分文字设置不同的颜色，并可点击 。如下图<br>
 ![可点击](https://github.com/ymex/textlabel/blob/master/art/click.png)
 ```
 textLabel.getStartSpanCell().text("查看协议：");
