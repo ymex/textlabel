@@ -24,7 +24,7 @@ import cn.ymex.view.label.TextLabel;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.dialog.controller.AlertController;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     TextLabel textLabel;
     ListView listView;
@@ -46,11 +46,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
-
-
     private List<String> getThemeData() {
-        return new ArrayList<String>(){{
+        return new ArrayList<String>() {{
             add("图文单元");
             add("设置点击事件");
         }};
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        System.out.println("-------------============"+i);
+        System.out.println("-------------============" + i);
         switch (i) {
             case 0:
                 ImageSpannable imageSpannable = new ImageSpannable(MainActivity.this, R.mipmap.ic_launcher);
@@ -72,18 +69,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 1:
                 final SpanCell spanCell1 = new SpanCell("点击事件");
 
-                spanCell1.setClickableSpan(TextLabel.SpanClickListener.onClick(new SpanCell.OnClickListener() {
+                spanCell1.setClickableSpan(new SpanCell.OnClickListener() {
                     @Override
                     public void onClick(View view, SpanCell spanCell) {
                         PopupDialog.create(MainActivity.this)
                                 .controller(AlertController
                                         .build()
                                         .title("提示")
-                                        .message(spanCell1.getText().toString())
+                                        .message(spanCell.getText().toString())
                                         .positiveButton("Ok", null))
                                 .show();
                     }
-                }));
+                });
                 textLabel.setText(spanCell1);
 
                 break;
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-            return new ViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
         }
 
         @Override

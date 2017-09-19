@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
@@ -56,9 +57,7 @@ public class SpanCell {
         this.linkColor = linkColor;
     }
 
-    public void setClickableImage(ClickableSpan clickable) {
-        this.clickableImage = clickable;
-    }
+
 
     public CharSequence getText() {
         return text;
@@ -84,9 +83,21 @@ public class SpanCell {
         return imageSpan;
     }
 
-    public void setClickableSpan(ClickableSpan clickable) {
-        this.clickableSpan = clickable;
+    /**
+     * 图文点击事件
+     * @param listener
+     */
+    public void setClickableSpan(OnClickListener listener) {
+        this.clickableSpan = SpanCell.SpanClickListener.onClick(listener,this);
         getSpannable();
+    }
+
+    /**
+     * 图片点击事件
+     * @param listener
+     */
+    public void setClickableImage(OnClickListener listener) {
+        this.clickableImage = SpanCell.SpanClickListener.onClick(listener,this);
     }
 
     public SpanCell text(CharSequence text) {
@@ -116,15 +127,6 @@ public class SpanCell {
     }
 
 
-    public SpanCell clickableImage(ClickableSpan clickable) {
-        this.clickableImage = clickable;
-        return this;
-    }
-
-    public SpanCell clickableSpan(ClickableSpan clickable) {
-        this.clickableSpan = clickable;
-        return this;
-    }
 
     public SpanCell linkColor(int linkColor) {
         this.linkColor = linkColor;
@@ -199,7 +201,48 @@ public class SpanCell {
         return builder.subSequence(0, builder.length());
     }
 
-    public interface OnClickListener{
+    public interface OnClickListener {
         void onClick(View view, SpanCell spanCell);
     }
+
+
+    /**
+     * click listener
+     */
+    public static class SpanClickListener extends ClickableSpan {
+
+        SpanCell.OnClickListener onClickListener;
+        SpanCell spanCell;
+
+        private SpanClickListener(SpanCell.OnClickListener clickListener, SpanCell spanCell) {
+            this.spanCell = spanCell;
+            this.onClickListener = clickListener;
+        }
+
+        public static SpanClickListener onClick(SpanCell.OnClickListener listener, SpanCell spanCell) {
+            return new SpanClickListener(listener, spanCell);
+        }
+
+        public static SpanClickListener onClick(SpanCell.OnClickListener listener) {
+            return new SpanClickListener(listener, null);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (this.onClickListener != null) {
+                this.onClickListener.onClick(view, spanCell);
+            }
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            if (spanCell != null) {
+                ds.setColor(spanCell.getLinkColor());
+            }
+            ds.setUnderlineText(false);//下划线
+            ds.clearShadowLayer();
+        }
+    }
+
 }

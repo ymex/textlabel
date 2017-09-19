@@ -11,14 +11,12 @@ import android.text.Layout;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.Touch;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 
 import cn.ymex.textlabel.R;
@@ -32,7 +30,7 @@ public class TextLabel extends AppCompatTextView {
     private SpanCell startSpanCell;
     private SpanCell endSpanCell;
     private SpanCell textSpanCell;
-    private CharSequence format;
+    private CharSequence stringFormat;
 
 
     public TextLabel(Context context) {
@@ -74,13 +72,6 @@ public class TextLabel extends AppCompatTextView {
         return false;
     }
 
-    public void setHTML(String html) {
-        CharSequence sequence = Html.fromHtml(html);
-        SpannableStringBuilder strBuilder =
-                new SpannableStringBuilder(sequence);
-        setText(strBuilder);
-    }
-    
 
     private void dealAttr(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TextLabel, 0, 0);
@@ -124,7 +115,7 @@ public class TextLabel extends AppCompatTextView {
                 R.styleable.TextLabel_endDrawableInLast,
                 R.styleable.TextLabel_endDrawableVerticalAlignment,
                 textColor, (int) textSize, linkColor);
-        format = typedArray.getString(R.styleable.TextLabel_format);
+        this.stringFormat = typedArray.getString(R.styleable.TextLabel_format);
         typedArray.recycle();
     }
 
@@ -160,9 +151,6 @@ public class TextLabel extends AppCompatTextView {
         return textSpanCell == null ? super.getText() : textSpanCell.text;
     }
 
-    public void setText(SpanCell... spanCells) {
-        setText(buildSpannableString(spanCells));
-    }
 
     /**
      * 获取显示的文字
@@ -198,8 +186,29 @@ public class TextLabel extends AppCompatTextView {
     }
 
 
+    /**
+     * 格式化 setText();
+     *
+     * @param args
+     */
     public void setTextFormat(Object... args) {
-        setTextf(this.format, args);
+        setTextFormatStr(this.stringFormat, args);
+    }
+
+    public void setText(SpanCell... spanCells) {
+        setText(buildSpannableString(spanCells));
+    }
+
+    /**
+     * html  setText();
+     *
+     * @param html
+     */
+    public void setHTML(String html) {
+        CharSequence sequence = Html.fromHtml(html);
+        SpannableStringBuilder strBuilder =
+                new SpannableStringBuilder(sequence);
+        setText(strBuilder);
     }
 
     /**
@@ -208,7 +217,7 @@ public class TextLabel extends AppCompatTextView {
      * @param format format
      * @param args   parameter
      */
-    public void setTextf(CharSequence format, Object... args) {
+    public void setTextFormatStr(CharSequence format, Object... args) {
         if (TextUtils.isEmpty(format)) {
             this.setText("");
             return;
@@ -226,19 +235,18 @@ public class TextLabel extends AppCompatTextView {
      * @param str  format
      * @param args parameter
      */
-    public void setTextf(@StringRes int str, Object... args) {
+    public void setTextFormatStr(@StringRes int str, Object... args) {
         String format = getResources().getString(str);
-        this.setTextf(format, args);
+        this.setTextFormatStr(format, args);
     }
 
-    public void setFormat(CharSequence formatText) {
-        this.format = formatText;
+    public void setStringFormat(CharSequence stringFormat) {
+        this.stringFormat = stringFormat;
     }
 
-    public CharSequence getFormat() {
-        return format;
+    public CharSequence getStringFormat() {
+        return stringFormat;
     }
-
 
     public void setStartSpanCell(SpanCell startSpanCell) {
         this.startSpanCell = startSpanCell;
@@ -254,58 +262,19 @@ public class TextLabel extends AppCompatTextView {
 
     public void setStartSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.startSpanCell != null) {
-            startSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, startSpanCell));
+            startSpanCell.setClickableSpan(onClickListener);
         }
     }
 
     public void setTextSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.textSpanCell != null) {
-            textSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, textSpanCell));
+            textSpanCell.setClickableSpan(onClickListener);
         }
     }
 
     public void setEndSpanCellClickListener(SpanCell.OnClickListener onClickListener) {
         if (this.endSpanCell != null) {
-            endSpanCell.setClickableSpan(SpanClickListener.onClick(onClickListener, endSpanCell));
-        }
-    }
-
-    /**
-     * click listener
-     */
-    public static class SpanClickListener extends ClickableSpan {
-
-        SpanCell.OnClickListener onClickListener;
-        SpanCell spanCell;
-
-        private SpanClickListener(SpanCell.OnClickListener clickListener, SpanCell spanCell) {
-            this.spanCell = spanCell;
-            this.onClickListener = clickListener;
-        }
-
-        public static SpanClickListener onClick(SpanCell.OnClickListener listener, SpanCell spanCell) {
-            return new SpanClickListener(listener, spanCell);
-        }
-
-        public static SpanClickListener onClick(SpanCell.OnClickListener listener) {
-            return new SpanClickListener(listener, null);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (this.onClickListener != null) {
-                this.onClickListener.onClick(view, spanCell);
-            }
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            super.updateDrawState(ds);
-            if (spanCell != null) {
-                ds.setColor(spanCell.getLinkColor());
-            }
-            ds.setUnderlineText(false);//下划线
-            ds.clearShadowLayer();
+            endSpanCell.setClickableSpan(onClickListener);
         }
     }
 
