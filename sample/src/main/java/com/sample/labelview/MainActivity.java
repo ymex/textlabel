@@ -2,8 +2,12 @@ package com.sample.labelview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
+import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 1:
                 final SpanCell spanCell1 = new SpanCell("点击事件");
+
                 spanCell1.setClickableSpan(TextLabel.SpanClickListener.onClick(new SpanCell.OnClickListener() {
                     @Override
                     public void onClick(View view, SpanCell spanCell) {
