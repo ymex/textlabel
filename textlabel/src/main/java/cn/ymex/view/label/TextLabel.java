@@ -140,6 +140,9 @@ public class TextLabel extends AppCompatTextView {
         return textSpanCell == null ? super.getText() : textSpanCell.text;
     }
 
+    public SpanCell getTextSpanCell() {
+        return textSpanCell;
+    }
 
     /**
      * 获取显示的文字
@@ -243,12 +246,42 @@ public class TextLabel extends AppCompatTextView {
         return stringFormat;
     }
 
-    public void setStartSpanCell(SpanCell startSpanCell) {
-        this.startSpanCell = startSpanCell;
+
+    public void setStartText(String text) {
+        this.startSpanCell = this.startSpanCell.text(text);
+        setStartText(this.startSpanCell);
     }
 
-    public void setEndSpanCell(SpanCell endSpanCell) {
+
+    public void setStartText(SpanCell startSpanCell) {
+        this.startSpanCell = startSpanCell;
+        setText(textSpanCell == null ? SpanCell.build().text("") : textSpanCell);
+    }
+
+    /**
+     * @deprecated
+     * @param startSpanCell
+     */
+    public void setStartSpanCell(SpanCell startSpanCell) {
+        setStartText(startSpanCell);
+    }
+
+    public void setEndText(String text) {
+        this.endSpanCell = this.endSpanCell.text(text);
+        setEndText(this.endSpanCell);
+    }
+
+    public void setEndText(SpanCell endSpanCell) {
         this.endSpanCell = endSpanCell;
+        setText(textSpanCell == null ? SpanCell.build().text("") : textSpanCell);
+    }
+
+    /**
+     * @deprecated
+     * @param endSpanCell endSpanCell
+     */
+    public void setEndSpanCell(SpanCell endSpanCell) {
+        setEndText(endSpanCell);
     }
 
 

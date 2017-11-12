@@ -43,7 +43,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
 
+
+
         textLabel = (TextLabel) findViewById(R.id.tv_label);
+
         listView = (ListView) findViewById(R.id.lv_listview);
 
         TextAdapter adapter = new TextAdapter(this, textLabel);

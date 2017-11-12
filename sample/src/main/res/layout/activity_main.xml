@@ -9,6 +9,7 @@
 
 
     <cn.ymex.view.label.TextLabel
+        android:id="@+id/tl_first"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dip"

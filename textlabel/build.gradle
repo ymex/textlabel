@@ -3,13 +3,13 @@ apply plugin: 'com.novoda.bintray-release' // must be applied after your artifac
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.1.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -36,7 +36,7 @@ publish {
     userOrg = 'ymex'
     groupId = 'cn.ymex'
     artifactId = 'textlabel'
-    publishVersion = '1.1.0'
+    publishVersion = '1.1.1'
     desc = 'textview for Android'
     website = 'https://github.com/ymex/textlabel'
 }

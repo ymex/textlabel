@@ -87,9 +87,10 @@ public class SpanCell {
      *
      * @param listener
      */
-    public void setClickableSpan(OnClickListener listener) {
+    public SpanCell setClickableSpan(OnClickListener listener) {
         this.clickableSpan = SpanCell.SpanClickListener.onClick(listener, this);
         getSpannable();
+        return this;
     }
 
     /**
@@ -97,8 +98,10 @@ public class SpanCell {
      *
      * @param listener
      */
-    public void setClickableImage(OnClickListener listener) {
+    public SpanCell setClickableImage(OnClickListener listener) {
         this.clickableImage = SpanCell.SpanClickListener.onClick(listener, this);
+        getSpannable();
+        return this;
     }
 
     public SpanCell text(CharSequence text) {
