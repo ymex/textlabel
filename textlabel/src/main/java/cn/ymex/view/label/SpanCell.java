@@ -21,12 +21,10 @@ public class SpanCell {
     float textSize;
     int textColor;
     int linkColor;
-    int backgroundColor = -1;//背景颜色
-    int backgroundRadius;//背景圆角半径
 
     boolean isImageSpanInLast = false;
     ImageSpan imageSpan;
-
+    BackgroundSpan backgroundSpan;
     ClickableSpan clickableSpan, clickableImage;
 
 
@@ -138,15 +136,19 @@ public class SpanCell {
         return this;
     }
 
-    public SpanCell setBackgroundColor(int backgroundColor) {
-        this.backgroundColor = backgroundColor;
+
+    /**
+     * text background
+     * @param color background color
+     * @param textColor text color
+     * @param radius background radius
+     * @return
+     */
+    public SpanCell setBackgroundSpan(int color,int textColor,int radius) {
+        this.backgroundSpan = new BackgroundSpan(color,textColor,radius);
         return this;
     }
 
-    public SpanCell setBackgroundRadius(int backgroundRadius) {
-        this.backgroundRadius = backgroundRadius;
-        return this;
-    }
 
     public SpanCell(CharSequence text) {
         this(text, null);
@@ -181,17 +183,14 @@ public class SpanCell {
 
     public CharSequence getSpannable() {
 
-
         SpannableString textSpanString = new SpannableString(TextUtils.isEmpty(this.text) ? "" : this.text);
         int start = 0, end = textSpanString.length();
-
 
         ForegroundColorSpan span = new ForegroundColorSpan(textColor);
         textSpanString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         AbsoluteSizeSpan sizeSpan = new AbsoluteSizeSpan((int) textSize);
         textSpanString.setSpan(sizeSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
 
         SpannableString imageSpanString = null;
         if (imageSpan != null) {
@@ -217,8 +216,9 @@ public class SpanCell {
         if (clickableSpan != null) {
             builder.setSpan(clickableSpan, 0, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        if (backgroundColor > 0) {
-            builder.setSpan(new BackgroundSpan(backgroundColor, textColor, backgroundRadius), 0, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        if (backgroundSpan != null) {
+            builder.setSpan(backgroundSpan, 0, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return builder.subSequence(0, builder.length());
     }

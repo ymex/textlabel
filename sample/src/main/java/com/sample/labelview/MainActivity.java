@@ -12,7 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         textLabel = (TextLabel) findViewById(R.id.tv_label);
+        initBackgrountLabel();
 
         listView = (ListView) findViewById(R.id.lv_listview);
 
@@ -44,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+    }
+
+    private void initBackgrountLabel() {
+        TextLabel vLabel = (TextLabel) findViewById(R.id.vBackgroundText);
+        SpanCell spanCell = new SpanCell("今天是 ");
+        SpanCell timeCell = new SpanCell( " "+new SimpleDateFormat("yyyy-mm-dd").format(new Date()) +" ");
+        timeCell.setBackgroundSpan(getResources().getColor(R.color.blue_light),Color.parseColor("#ffffff"),8);
+        vLabel.setText(spanCell, timeCell);
     }
 
 

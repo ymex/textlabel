@@ -12,7 +12,7 @@ TextLabel依赖SpanCell实现图文混排 。一个SpanCell由文字与一个图
 ## gradle依赖
 
 ```
-compile 'cn.ymex:textlabel:1.1.1'
+compile 'cn.ymex:textlabel:1.1.2'
 ```
 
 ## 使用场景
