@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initBackgrountLabel() {
         TextLabel vLabel = (TextLabel) findViewById(R.id.vBackgroundText);
-        SpanCell spanCell = new SpanCell("今天是 ");
-        SpanCell timeCell = new SpanCell( " "+new SimpleDateFormat("yyyy-mm-dd").format(new Date()) +" ");
-        timeCell.setBackgroundSpan(getResources().getColor(R.color.blue_light),Color.parseColor("#ffffff"),8);
+        SpanCell spanCell = new SpanCell("【新年货】Galaxy S8（SM-G9500）4GB+64GB 谜夜黑 移动联通电信4G手机 双卡双待 ");
+        SpanCell timeCell = new SpanCell( " 春节特别活动 ");
+        timeCell.setBackgroundSpan(getResources().getColor(R.color.colorAccent),Color.parseColor("#ffffff"),8);
         vLabel.setText(spanCell, timeCell);
     }
 
