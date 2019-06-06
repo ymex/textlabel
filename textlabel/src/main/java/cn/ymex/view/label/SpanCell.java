@@ -18,14 +18,14 @@ import android.view.View;
 
 public class SpanCell {
     CharSequence text;
-    float textSize;
-    int textColor;
-    int linkColor;
+    private float textSize;
+    private int textColor;
+    private int linkColor;
 
-    boolean isImageSpanInLast = false;
+    private boolean isImageSpanInLast = false;
     ImageSpan imageSpan;
-    BackgroundSpan backgroundSpan;
-    ClickableSpan clickableSpan, clickableImage;
+    private BackgroundSpan backgroundSpan;
+    private ClickableSpan clickableSpan, clickableImage;
 
 
     public static SpanCell build() {

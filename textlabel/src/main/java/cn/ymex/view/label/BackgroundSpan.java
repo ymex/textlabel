@@ -5,6 +5,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.text.style.ReplacementSpan;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * Created by ymexc on 2018/1/15.
@@ -24,7 +26,7 @@ public class BackgroundSpan extends ReplacementSpan {
     }
 
     @Override
-    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
+    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
         RectF rect = new RectF(x, top, x + measureText(paint, text, start, end), bottom);
         paint.setColor(backgroundColor);
         canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
@@ -33,7 +35,7 @@ public class BackgroundSpan extends ReplacementSpan {
     }
 
     @Override
-    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+    public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
         return Math.round(paint.measureText(text, start, end));
     }
 

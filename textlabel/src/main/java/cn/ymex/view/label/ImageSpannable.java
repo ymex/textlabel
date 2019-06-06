@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 
+import androidx.annotation.NonNull;
+
 /**
  * ImageSpan
  */
@@ -16,7 +18,7 @@ public class ImageSpannable extends ImageSpan {
 
     public static final int ALIGN_FONTCENTER = 2;
 
-    int imgWidth, imgHeight;
+    private int imgWidth, imgHeight;
 
 
     public ImageSpannable(Context context, int resourceId) {
@@ -59,8 +61,8 @@ public class ImageSpannable extends ImageSpan {
     }
 
     @Override
-    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom,
-                     Paint paint) {
+    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom,
+                     @NonNull Paint paint) {
 
 
         Drawable drawable = getDrawable();
@@ -82,7 +84,7 @@ public class ImageSpannable extends ImageSpan {
 
 
     @Override
-    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+    public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
         Drawable d = getDrawable();
         Rect rect = d.getBounds();
         if (fm != null) {

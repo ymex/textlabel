@@ -3,9 +3,9 @@ package cn.ymex.view.label;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.StringRes;
-import android.support.annotation.StyleableRes;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.annotation.StringRes;
+import androidx.annotation.StyleableRes;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Layout;
 import android.text.Selection;
@@ -61,8 +61,9 @@ public class TextLabel extends AppCompatTextView {
         linkHit = false;
         boolean res = super.onTouchEvent(event);
 
-        if (dontConsumeNonUrlClicks)
+        if (dontConsumeNonUrlClicks) {
             return linkHit;
+        }
         return res;
 
     }
