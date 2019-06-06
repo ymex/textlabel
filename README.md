@@ -8,11 +8,16 @@
 TextLabel可独立设置一个固定头片段和一个尾片段。每个图文片段（SpanCell）都可以独门设置颜色，图片，大小，点击事件。
 TextLabel依赖SpanCell实现图文混排 。一个SpanCell由文字与一个图片组成，基于SpanCell可实现混排效果。 
 
+## 说明
+项目在分支androidx 和 support ，master 分支没有代码。
 
 ## gradle依赖
 
 ```
+//support版本
 compile 'cn.ymex:textlabel:1.1.2'
+//androidx版本
+compile 'cn.ymex:textlabel:1.1.3'
 ```
 
 ## 使用场景
