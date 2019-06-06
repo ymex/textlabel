@@ -33,7 +33,7 @@ publish {
     userOrg = 'ymex'
     groupId = 'cn.ymex'
     artifactId = 'textlabel'
-    publishVersion = '1.1.2'
+    publishVersion = '1.1.3'
     desc = 'textview for Android'
     website = 'https://github.com/ymex/textlabel'
 }
